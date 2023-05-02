@@ -1,5 +1,5 @@
-const TodoItem = ({ itemProp, handleChange }) => {
-
+/* eslint-disable react/prop-types */
+const TodoItem = ({ itemProp, handleChange, delTodo }) => {
   return (
     <li>
       <input
@@ -7,6 +7,7 @@ const TodoItem = ({ itemProp, handleChange }) => {
         checked={itemProp.completed}
         onChange={() => handleChange(itemProp.id)}
       />
+      <button onClick={() => delTodo(itemProp.id)}>Delete</button>
       {itemProp.title}
     </li>
   );
