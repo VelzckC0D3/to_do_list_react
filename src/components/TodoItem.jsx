@@ -1,8 +1,10 @@
 import styles from "@/styles/TodoItem.module.scss";
-import { useState } from "react";
+import { useState, useRef } from 'react';
 /* eslint-disable react/prop-types */
 const TodoItem = ({ itemProp, handleChange, delTodo, setUpdate }) => {
   const [editing, setEditing] = useState(false);
+  const editInputRef = useRef(null);
+//  const [updateInput, setUpdateInput] = useState(itemProp.title);
   const completedStyle = {
     fontStyle: "italic",
     color: "#595959",
@@ -21,6 +23,7 @@ const TodoItem = ({ itemProp, handleChange, delTodo, setUpdate }) => {
   }
   const handleUpdatedDone = (event) => {
     if (event.key === 'Enter') {
+      setUpdate(editInputRef.current.value, itemProp.id);
       setEditing(false);
     }
   };
@@ -35,15 +38,15 @@ const TodoItem = ({ itemProp, handleChange, delTodo, setUpdate }) => {
         <button onClick={handleEditing}>Edit</button>
         <button onClick={() => delTodo(itemProp.id)}>Delete</button>
         <span style={itemProp.completed ? completedStyle : null}>
-          {itemProp.title}
+        {itemProp.title}
         </span>
       </div>
       <input
-        onChange={(e) => setUpdate(e.target.value, itemProp.id)}
-        style={editMode}
         type="text"
-        value={itemProp.title}
+        ref={editInputRef}
+        defaultValue={itemProp.title}
         className={styles.textInput}
+        style={editMode}
         onKeyDown={handleUpdatedDone}
       />
     </li>
